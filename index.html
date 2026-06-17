@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026智慧眼鏡驗配歷史紀錄回溯系統</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #f5f5f7; color: #1d1d1f; padding: 20px; display: flex; justify-content: center; }
+        .container { background: #fff; padding: 24px; border-radius: 12px; width: 100%; max-width: 500px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        h2 { font-size: 20px; font-weight: 600; margin-bottom: 24px; text-align: center; border-bottom: 1px solid #e5e5e7; padding-bottom: 12px; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; font-weight: 600; margin-bottom: 8px; font-size: 15px; }
+        .required::after { content: " *"; color: #de350b; }
+        select, input[type="tel"], textarea { width: 100%; padding: 12px; border: 1px solid #d2d2d7; border-radius: 8px; font-size: 16px; box-sizing: border-box; -webkit-appearance: none; }
+        select:focus, input:focus { border-color: #0071e3; outline: none; }
+        .radio-group { display: flex; flex-direction: column; gap: 8px; }
+        .radio-label { display: flex; align-items: center; padding: 12px; border: 1px solid #d2d2d7; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: normal; }
+        .radio-label input { margin-right: 12px; transform: scale(1.2); }
+        .radio-label:has(input:checked) { border-color: #0071e3; background-color: #f5faff; font-weight: 600; }
+        .btn-submit { width: 100%; padding: 14px; background-color: #0071e3; color: #fff; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; margin-top: 10px; }
+        .btn-submit:disabled { background-color: #aeaeaf; cursor: not-allowed; }
+        .note { font-size: 12px; color: #86868b; margin-top: 4px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>智慧眼鏡驗配紀錄回溯 (前半年)</h2>
+    
+    <form id="surveyForm">
+        <div class="form-group">
+            <label class="required">填報門市</label>
+            <select name="store" required>
+                <option value="">請選擇門市...</option>
+                <option value="0002_北市站前">0002_北市站前</option>
+                <option value="0008_北市新南">0008_北市新南</option>
+                <option value="0009_北市忠孝">0009_北市忠孝</option>
+                <option value="0011_新莊新泰">0011_新莊新泰</option>
+                <option value="0012_三峽復興">0012_三峽復興</option>
+                <option value="0013_三重重新">0013_三重重新</option>
+                <option value="0014_桃園中正">0014_桃園中正</option>
+                <option value="0016_台南民生">0016_台南民生</option>
+                <option value="0017_板橋忠孝">0017_板橋忠孝</option>
+                <option value="0018_高雄鳳山">0018_高雄鳳山</option>
+                <option value="0019_永和永和">0019_永和永和</option>
+                <option value="0020_新竹文化">0020_新竹文化</option>
+                <option value="0021_桃園中壢">0021_桃園中壢</option>
+                <option value="0032_台中大墩">0032_台中大墩</option>
+                <option value="0047_北市內湖">0047_北市內湖</option>
+                <option value="0054_北市常德">0054_北市常德</option>
+                <option value="0083_花蓮中山">0083_花蓮中山</option>
+                <option value="0087_三重信林">0087_三重信林</option>
+                <option value="0088_南崁中正">0088_南崁中正</option>
+                <option value="0089_桃園龍潭">0089_桃園龍潭</option>
+                <option value="0090_板橋文化">0090_板橋文化</option>
+                <option value="0091_北市士林">0091_北市士林</option>
+                <option value="0092_中和南勢角">0092_中和南勢角</option>
+                <option value="0094_台中豐原">0094_台中豐原</option>
+                <option value="0095_台中東勢">0095_台中東勢</option>
+                <option value="0097_屏東潮州">0097_屏東潮州</option>
+                <option value="0098_嘉義垂楊">0098_嘉義垂楊</option>
+                <option value="0099_高雄左營">0099_高雄左營</option>
+                <option value="0118_澎湖澎一">0118_澎湖澎一</option>
+                <option value="0201_台南長榮">0201_台南長榮</option>
+                <option value="0202_台中西屯">0202_台中西屯</option>
+                <option value="0203_台中崇德">0203_台中崇德</option>
+                <option value="0204_桃園藝文">0204_桃園藝文</option>
+                <option value="0205_新竹竹北">0205_新竹竹北</option>
+                <option value="0206_雲林斗六">0206_雲林斗六</option>
+                <option value="0207_基隆義一">0207_基隆義一</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label class="required">三聯單號</label>
+            <input type="tel" name="invoice_no" placeholder="請輸入12碼純數字" pattern="\d{12}" maxlength="12" required>
+            <div class="note">格式：店別4碼 + 西元年度2碼 + 流水碼6碼</div>
+        </div>
+
+        <div class="form-group">
+            <label class="required">智慧眼鏡類型</label>
+            <select name="device_type" required>
+                <option value="">請選擇眼鏡品牌...</option>
+                <option value="Meta Ray-Ban">Meta Ray-Ban</option>
+                <option value="ASUS AirVision M1">ASUS AirVision M1</option>
+                <option value="HTC VIVE Eagle">HTC VIVE Eagle</option>
+                <option value="Rokid Glasses / Max">Rokid Glasses / Max</option>
+                <option value="JINS × MEME">JINS × MEME</option>
+                <option value="SOLOS 智慧眼鏡">SOLOS 智慧眼鏡</option>
+                <option value="其他品牌">其他品牌 (請在下方補充說明備註)</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label class="required">客戶處方類別</label>
+            <div class="radio-group">
+                <label class="radio-label"><input type="radio" name="rx_type" value="近視單焦" required> 近視單焦</label>
+                <label class="radio-label"><input type="radio" name="rx_type" value="老花單焦"> 老花單焦</label>
+                <label class="radio-label"><input type="radio" name="rx_type" value="老花多焦"> 老花多焦</label>
+                <label class="radio-label"><input type="radio" name="rx_type" value="平光"> 平光</label>
+                <label class="radio-label"><input type="radio" name="rx_type" value="視控鏡片"> 視控鏡片</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>補充說明</label>
+            <textarea name="memo" rows="3" placeholder="若有特殊客製規格或備註，請在此輸入..."></textarea>
+        </div>
+
+        <button type="submit" class="btn-submit" id="submitBtn">提交紀錄</button>
+    </form>
+</div>
+
+<script>
+    const form = document.getElementById('surveyForm');
+    const submitBtn = document.getElementById('submitBtn');
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        submitBtn.disabled = true;
+        submitBtn.innerText = '處理中...';
+
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData.entries());
+
+        // 請在此處將您的 Google Apps Script 部署網址貼上 (覆蓋下方引號內的文字)
+        const scriptUrl = '您的_GOOGLE_APPS_SCRIPT_部署網址'; 
+
+        fetch(scriptUrl, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        })
+        .then(() => {
+            alert('紀錄提交成功！');
+            form.reset();
+        })
+        .catch(error => {
+            alert('提交失敗，請檢查網路連線或聯繫總部。');
+            console.error('Error:', error);
+        })
+        .finally(() => {
+            submitBtn.disabled = false;
+            submitBtn.innerText = '提交紀錄';
+        });
+    });
+</script>
+
+</body>
+</html>
