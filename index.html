@@ -14,11 +14,15 @@
             --primary-color: #2563eb;
             --btn-gradient: linear-gradient(135deg, #1d4ed8 0%, #0f172a 100%);
             --btn-hover-gradient: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-            --bg-color: #cbd5e1; /* 穩定高奢的鈦金屬灰底色 */
+            --bg-color: #cbd5e1; /* 鈦金屬灰底色 */
             --text-main: #0f172a;
             --text-muted: #475569;
             
-            /* 處方類別色彩語意 (高飽和商務色區隔) */
+            /* Apple 經典選取確認色（精緻數位藍與立體光暈） */
+            --apple-selected-border: #0066cc;
+            --apple-selected-glow: rgba(0, 102, 204, 0.15);
+            
+            /* 處方類別色彩語意 */
             --color-myopia: #1e40af;     
             --color-presbyopia: #ea580c; 
             --color-progressive: #16a34a;
@@ -55,7 +59,7 @@
             box-sizing: border-box;
         }
 
-        /* 💡 修正 1：移除灰色底色，Logo 尺寸放大為 220% (寬度對齊 132px) */
+        /* 大學眼鏡 Logo 容器 */
         .card-logo-box {
             text-align: center;
             margin-bottom: 25px;
@@ -66,35 +70,38 @@
         }
 
         .card-logo-box img {
-            max-width: 132px; /* 60px * 2.2 = 132px */
+            max-width: 132px;
             height: auto;
             display: inline-block;
             vertical-align: middle;
         }
         
         h2 { font-size: 25px; font-weight: 900; margin: 15px 0 6px 0; text-align: center; letter-spacing: -0.5px; color: #000; }
-        
-        /* 💡 修正 2：副標題更新為「2026上半年記錄」 */
-        .subtitle { 
-            text-align: center; 
-            color: var(--text-muted); 
-            font-size: 14px; 
-            margin-bottom: 40px; 
-            font-weight: 700; 
-            letter-spacing: 2px;
-        }
-
+        .subtitle { text-align: center; color: var(--text-muted); font-size: 14px; margin-bottom: 40px; font-weight: 700; letter-spacing: 2px; }
         .form-group { margin-bottom: 28px; }
         label { display: block; font-weight: 700; margin-bottom: 12px; font-size: 15px; color: #000; }
         .required::after { content: " *"; color: #df1c1c; }
         
-        /* 表單欄位 */
+        /* 基礎表單輸入框樣式 */
         select, input[type="tel"], textarea { 
             width: 100%; padding: 16px; border: 1.5px solid #cbd5e1; border-radius: 16px; font-size: 16px; 
             box-sizing: border-box; background-color: #fff; box-shadow: inset 0 2px 4px rgba(15, 23, 42, 0.04); 
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); color: var(--text-main); -webkit-appearance: none;
         }
-        select:focus, input:focus, textarea:focus { border-color: var(--primary-color); box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.2); background-color: #fff; outline: none; }
+        
+        select:focus, input:focus, textarea:focus { 
+            border-color: var(--primary-color); 
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.2); 
+            background-color: #fff; 
+            outline: none; 
+        }
+        
+        /* 💡 核心優化：比照 Apple Store 選自訂規格，填妥後動態加上的「彩色鎖定圖框」效果 */
+        select.filled, input.filled {
+            border-color: var(--apple-selected-border);
+            background-color: #fafdff;
+            box-shadow: inset 0 1px 2px rgba(0, 102, 204, 0.02), 0 4px 12px var(--apple-selected-glow);
+        }
         
         .radio-group { display: flex; flex-direction: column; gap: 12px; }
         
@@ -134,16 +141,14 @@
         /* 提交按鈕 */
         .btn-submit { width: 100%; padding: 18px; background: var(--btn-gradient); color: #fff; border: none; border-radius: 16px; font-size: 16px; font-weight: 700; cursor: pointer; margin-top: 10px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.3), inset 0 1px 0 rgba(255,255,255,0.2); transition: all 0.2s ease; letter-spacing: 1px; }
         .btn-submit:hover { background: var(--btn-hover-gradient); transform: translateY(-2px); box-shadow: 0 12px 28px rgba(37, 99, 235, 0.4); }
-        .btn-submit:active { transform: translateY(1px); }
         .btn-submit:disabled { background: #cbd5e1; color: #94a3b8; cursor: not-allowed; transform: none; box-shadow: none; }
         
-        /* 單號區塊排版優化 */
+        /* 單號區塊排版 */
         .info-note { font-size: 13px; color: var(--text-muted); margin-top: -4px; margin-bottom: 10px; font-weight: 500; }
         .count-note { font-size: 13px; color: var(--text-muted); margin-top: 8px; text-align: right; font-weight: 500; }
         .counter { font-weight: 700; color: var(--primary-color); }
 
         /* 歷史填報清單 */
-        .history-container { margin-top: 24px; }
         h3 { font-size: 16px; font-weight: 700; margin: 0 0 18px 0; display: flex; justify-content: space-between; color: #000; }
         .history-list { display: flex; flex-direction: column; gap: 12px; max-height: 320px; overflow-y: auto; }
         .history-item { padding: 16px; border: 1px solid #e2e8f0; border-radius: 12px; background-color: #fff; font-size: 14px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 6px rgba(15, 23, 42, 0.02); }
@@ -203,7 +208,7 @@
                 <option value="0203_台中崇德">0203_台中崇德</option>
                 <option value="0204_桃園藝文">0204_桃園藝文</option>
                 <option value="0205_新竹竹北">0205_新竹竹北</option>
-                <option value="0206_雲林斗六">0206_雲林斗六</option>
+                <option value="0206_雲林斗微">0206_雲林斗六</option>
                 <option value="0207_基隆義一">0207_基隆義一</option>
             </select>
         </div>
@@ -267,17 +272,42 @@
     const form = document.getElementById('surveyForm');
     const submitBtn = document.getElementById('submitBtn');
     const historyList = document.getElementById('historyList');
+    
+    // 監測目標物件
+    const storeSelect = document.getElementById('storeSelect');
     const invoiceInput = document.getElementById('invoiceInput');
+    const deviceSelect = document.getElementById('deviceSelect');
     const charCount = document.getElementById('charCount');
 
     // ⚠️ 請填入您的 Google Apps Script 實體部署網址
     const scriptUrl = 'https://script.google.com/macros/s/AKfycbzmKUvcAfvesNHHthe8iiw-Co28v43ufyafDEo_1JR04I6-VcZaIUyJ0EKxfdYGkhbo1A/exec'; 
 
-    document.addEventListener('DOMContentLoaded', renderHistory);
+    document.addEventListener('DOMContentLoaded', () => {
+        renderHistory();
+        checkFieldsStatus(); // 初始檢查狀態
+    });
 
-    // 三聯單號即時計數
+    // 💡 核心機制：動態偵測並加入/移除 Apple 經典亮色外框 (filled 類別)
+    function checkFieldsStatus() {
+        // 1. 門市選單
+        if (storeSelect.value !== "") storeSelect.classList.add('filled');
+        else storeSelect.classList.remove('filled');
+
+        // 2. 三聯單號 (標準格式為 12 碼則亮起確認框)
+        if (invoiceInput.value.length === 12) invoiceInput.classList.add('filled');
+        else invoiceInput.classList.remove('filled');
+
+        // 3. 眼鏡類型選單
+        if (deviceSelect.value !== "") deviceSelect.classList.add('filled');
+        else deviceSelect.classList.remove('filled');
+    }
+
+    // 監聽群組
+    storeSelect.addEventListener('change', checkFieldsStatus);
+    deviceSelect.addEventListener('change', checkFieldsStatus);
     invoiceInput.addEventListener('input', function() {
         charCount.innerText = this.value.length;
+        checkFieldsStatus();
     });
 
     form.addEventListener('submit', function(e) {
@@ -288,7 +318,6 @@
         const formData = new FormData(form);
         const data = Object.fromEntries(formData.entries());
 
-        // 本地快取單號與機型空值預設處理
         const displayInvoice = data.invoice_no || "未填單號(" + new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) + ")";
         const displayDevice = data.device_type || "未指定機型";
 
@@ -304,6 +333,7 @@
             saveToLocal(localData); 
             form.reset();
             charCount.innerText = 0; 
+            checkFieldsStatus(); // 重置所有 Apple 高光框
             renderHistory();   
         })
         .catch(error => {
@@ -370,6 +400,7 @@
             if(convRadio) convRadio.checked = true;
             
             window.scrollTo({ top: 0, behavior: 'smooth' });
+            checkFieldsStatus(); // 修改抽回時同步點亮已填寫之 Apple 外框
             alert('已將資料抽回表單，修正後重新提交即可。');
         }
     }
