@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>智慧眼鏡驗配調查</title>
+    <title>大學眼鏡 | 智慧眼鏡驗配調查</title>
     <style>
         :root {
-            --primary-color: #1e3a8a;
+            --primary-color: #2563eb;
             --btn-gradient: linear-gradient(135deg, #2b579a 0%, #1e3a8a 100%);
             --btn-hover-gradient: linear-gradient(135deg, #3b71ca 0%, #254b8c 100%);
             --bg-gradient: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 50%, #94a3b8 100%);
             --text-main: #0f172a;
             --text-muted: #475569;
             
-            /* 處方類別 Apple 專用色彩語意 */
+            /* 處方類別色彩語意 */
             --color-myopia: #0066cc;     
             --color-presbyopia: #b74d00; 
             --color-progressive: #107c41;
@@ -26,147 +26,96 @@
             background: var(--bg-gradient);
             background-attachment: fixed;
             color: var(--text-main); 
-            padding: 40px 15px; 
+            padding: 20px 15px 50px 15px; 
             display: flex; 
             flex-direction: column;
             align-items: center;
             margin: 0;
-            gap: 28px;
+            gap: 24px;
             -webkit-font-smoothing: antialiased;
         }
+
+        /* Logo 容器與立體陰影 */
+        .logo-container {
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .logo-container img {
+            max-width: 200px;
+            height: auto;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.08));
+        }
         
-        /* 玻璃擬態高質感外殼與立體陰影 */
+        /* Apple 風格玻璃擬態卡片 */
         .container, .history-container { 
-            background: rgba(255, 255, 255, 0.82); 
+            background: rgba(255, 255, 255, 0.85); 
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            padding: 40px 30px; 
+            padding: 35px 25px; 
             border-radius: 20px; 
             width: 100%; 
             max-width: 500px; 
             border: 1px solid rgba(255, 255, 255, 0.5);
-            /* 多層次細緻深邃陰影 */
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 
-                        0 20px 40px -5px rgba(15, 23, 42, 0.12),
+                        0 20px 40px -5px rgba(15, 23, 42, 0.12), 
                         inset 0 1px 0 rgba(255, 255, 255, 0.6);
             box-sizing: border-box;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         
-        h2 { font-size: 24px; font-weight: 700; margin: 0 0 6px 0; text-align: center; letter-spacing: -0.5px; color: #000; }
-        .subtitle { text-align: center; color: var(--text-muted); font-size: 14px; margin-bottom: 36px; font-weight: 500; }
-        .form-group { margin-bottom: 26px; }
+        h2 { font-size: 24px; font-weight: 700; margin: 10px 0 6px 0; text-align: center; letter-spacing: -0.5px; color: #000; }
+        .subtitle { text-align: center; color: var(--text-muted); font-size: 14px; margin-bottom: 30px; font-weight: 500; }
+        .form-group { margin-bottom: 24px; }
         label { display: block; font-weight: 600; margin-bottom: 10px; font-size: 15px; color: var(--text-main); }
         .required::after { content: " *"; color: #df1c1c; }
         
-        /* 輸入框微陰影與內嵌光澤 */
         select, input[type="tel"], textarea { 
-            width: 100%; 
-            padding: 14px 16px; 
-            border: 1px solid #b0bec5; 
-            border-radius: 12px; 
-            font-size: 16px; 
-            box-sizing: border-box; 
-            background-color: rgba(255, 255, 255, 0.9);
-            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 0 rgba(255, 255, 255, 0.8);
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); 
-            color: var(--text-main);
-            -webkit-appearance: none;
+            width: 100%; padding: 14px 16px; border: 1px solid #b0bec5; border-radius: 12px; font-size: 16px; box-sizing: border-box; background-color: rgba(255, 255, 255, 0.9); box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.06); transition: all 0.25s ease; color: var(--text-main); -webkit-appearance: none;
         }
+        select:focus, input:focus, textarea:focus { border-color: #0066cc; box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.2); background-color: #fff; outline: none; }
         
-        select:focus, input:focus, textarea:focus { 
-            border-color: #0066cc; 
-            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05), 0 0 0 4px rgba(0, 102, 204, 0.2);
-            background-color: #fff;
-            outline: none; 
-        }
-        
-        .radio-group { display: flex; flex-direction: column; gap: 12px; }
-        
-        /* 處方卡片微陰影與懸停立體感 */
-        .radio-label { 
-            display: flex; 
-            align-items: center; 
-            padding: 15px 18px; 
-            border: 1px solid #cfd8dc; 
-            border-radius: 12px; 
-            cursor: pointer; 
-            font-size: 16px; 
-            font-weight: 600; 
-            background-color: rgba(255, 255, 255, 0.7);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02), 0 1px 0 rgba(255,255,255,0.9);
-            transition: all 0.2s ease; 
-        }
-        
+        .radio-group { display: flex; flex-direction: column; gap: 10px; }
+        .radio-label { display: flex; align-items: center; padding: 14px 18px; border: 1px solid #cfd8dc; border-radius: 12px; cursor: pointer; font-size: 16px; font-weight: 600; background-color: rgba(255, 255, 255, 0.7); box-shadow: 0 2px 4px rgba(0,0,0,0.02); transition: all 0.2s ease; }
         .radio-label input { margin-right: 14px; transform: scale(1.25); }
-        .radio-label:hover { transform: translateY(-1px); box-shadow: 0 4px 8px rgba(0,0,0,0.05); border-color: #b0bec5; }
+        .radio-label:hover { transform: translateY(-1px); box-shadow: 0 4px 8px rgba(0,0,0,0.05); }
 
-        /* 5種處方點選後的精緻顯色與擴展陰影 */
         .rx-myopia { color: var(--color-myopia); } .rx-myopia input { accent-color: var(--color-myopia); }
-        .rx-myopia:has(input:checked) { border-color: var(--color-myopia); background-color: #f0f7ff; box-shadow: 0 0 0 1px var(--color-myopia), 0 4px 12px rgba(0, 102, 204, 0.12); }
-
+        .rx-myopia:has(input:checked) { border-color: var(--color-myopia); background-color: #f0f7ff; box-shadow: 0 0 0 1px var(--color-myopia), 0 4px 12px rgba(0, 102, 204, 0.1); }
+        
         .rx-presbyopia { color: var(--color-presbyopia); } .rx-presbyopia input { accent-color: var(--color-presbyopia); }
-        .rx-presbyopia:has(input:checked) { border-color: var(--color-presbyopia); background-color: #fffaf5; box-shadow: 0 0 0 1px var(--color-presbyopia), 0 4px 12px rgba(183, 77, 0, 0.12); }
-
+        .rx-presbyopia:has(input:checked) { border-color: var(--color-presbyopia); background-color: #fffaf5; box-shadow: 0 0 0 1px var(--color-presbyopia), 0 4px 12px rgba(183, 77, 0, 0.1); }
+        
         .rx-progressive { color: var(--color-progressive); } .rx-progressive input { accent-color: var(--color-progressive); }
-        .rx-progressive:has(input:checked) { border-color: var(--color-progressive); background-color: #f3faf5; box-shadow: 0 0 0 1px var(--color-progressive), 0 4px 12px rgba(16, 124, 65, 0.12); }
-
+        .rx-progressive:has(input:checked) { border-color: var(--color-progressive); background-color: #f3faf5; box-shadow: 0 0 0 1px var(--color-progressive), 0 4px 12px rgba(16, 124, 65, 0.1); }
+        
         .rx-plano { color: var(--color-plano); } .rx-plano input { accent-color: var(--color-plano); }
-        .rx-plano:has(input:checked) { border-color: var(--color-plano); background-color: #f8fafc; box-shadow: 0 0 0 1px var(--color-plano), 0 4px 12px rgba(85, 85, 85, 0.1); }
-
+        .rx-plano:has(input:checked) { border-color: var(--color-plano); background-color: #f8fafc; box-shadow: 0 0 0 1px var(--color-plano), 0 4px 12px rgba(85, 85, 85, 0.08); }
+        
         .rx-control { color: var(--color-control); } .rx-control input { accent-color: var(--color-control); }
-        .rx-control:has(input:checked) { border-color: var(--color-control); background-color: #f4faff; box-shadow: 0 0 0 1px var(--color-control), 0 4px 12px rgba(0, 119, 145, 0.12); }
+        .rx-control:has(input:checked) { border-color: var(--color-control); background-color: #f4faff; box-shadow: 0 0 0 1px var(--color-control), 0 4px 12px rgba(0, 119, 145, 0.1); }
         
-        /* 頂級深藍微漸層按鈕加重陰影 */
-        .btn-submit { 
-            width: 100%; 
-            padding: 16px; 
-            background: var(--btn-gradient); 
-            color: #fff; 
-            border: none; 
-            border-radius: 12px; 
-            font-size: 16px; 
-            font-weight: 600; 
-            cursor: pointer; 
-            margin-top: 12px; 
-            box-shadow: 0 4px 12px rgba(30, 58, 138, 0.3), inset 0 1px 0 rgba(255,255,255,0.2);
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .btn-submit:hover { 
-            background: var(--btn-hover-gradient);
-            transform: translateY(-1px);
-            box-shadow: 0 6px 20px rgba(30, 58, 138, 0.45);
-        }
-
-        .btn-submit:active { transform: translateY(1px); }
-        .btn-submit:disabled { background: #cbd5e1; color: #94a3b8; cursor: not-allowed; transform: none; box-shadow: none; }
+        .btn-submit { width: 100%; padding: 16px; background: var(--btn-gradient); color: #fff; border: none; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; margin-top: 10px; box-shadow: 0 4px 12px rgba(30, 58, 138, 0.3), inset 0 1px 0 rgba(255,255,255,0.2); transition: all 0.2s ease; }
+        .btn-submit:hover { background: var(--btn-hover-gradient); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(30, 58, 138, 0.45); }
+        .btn-submit:disabled { background: #cbd5e1; color: #94a3b8; cursor: not-allowed; }
         .note { font-size: 13px; color: var(--text-muted); margin-top: 6px; }
 
-        /* 歷史清單面板樣式升級 */
-        h3 { font-size: 16px; font-weight: 700; margin: 0 0 18px 0; color: var(--text-main); display: flex; justify-content: space-between; }
+        h3 { font-size: 16px; font-weight: 700; margin: 0 0 18px 0; display: flex; justify-content: space-between; }
         .history-list { display: flex; flex-direction: column; gap: 12px; max-height: 320px; overflow-y: auto; }
         .history-item { padding: 14px; border: 1px solid #e2e8f0; border-radius: 10px; background-color: rgba(255,255,255,0.6); font-size: 14px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.01); }
         .item-details .inv { font-weight: 700; color: #000; font-size: 15px; }
         .item-details .meta { color: var(--text-muted); font-size: 12px; margin-top: 2px; }
-        
-        .btn-edit { 
-            padding: 7px 14px; 
-            background-color: #fff; 
-            border: 1px solid #cbd5e1; 
-            border-radius: 8px; 
-            font-size: 13px; 
-            cursor: pointer; 
-            font-weight: 600; 
-            color: #dc2626; 
-            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
-            transition: all 0.15s ease; 
-        }
-        .btn-edit:hover { background-color: #fef2f2; border-color: #fca5a5; transform: translateY(-0.5px); box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .btn-edit { padding: 7px 14px; background-color: #fff; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 13px; cursor: pointer; font-weight: 600; color: #dc2626; box-shadow: 0 2px 4px rgba(0,0,0,0.03); transition: all 0.15s ease; }
+        .btn-edit:hover { background-color: #fef2f2; border-color: #fca5a5; }
         .no-data { text-align: center; color: var(--text-muted); font-size: 14px; padding: 24px 0; }
     </style>
 </head>
 <body>
+
+<div class="logo-container">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAA0CAMAAAAgP39hAAAASFBMVEV/wP7///9/wP9/wP9/wP9/wP9/wP9/wP9/wP9/wP9/wP9/wP9/wP9/wP9/wP9/wP9/wP9/wP9/wP9/wP9/wP9/wP9/wP9/wP619f7wAAAAFnRSTlMAEBAwQFBggICQoMDQ4PEBESExQVFhcY3fX98AAAJZSURBVGjdecLpcoMwEAVgM9gGg80u29z/eUvVpE6Z6pC6v86MRg869E+zD3v/s7GgqMv6vG4M7M8Nhm77R6NhAAb96bEAsOifpgrAon+aCwCL/mUrADX9yzYAavqX7QAU9S/bASjqX7YFUNTftgUoqPst9qGo+y3Wp6Lut1itSkXdb7E6pZDut1gdkpBut1iNSIK632I1IAnqfovVgCSp+y1WAwSg7rdY9RBA3W+x6gBv6n6LVQfI/S9Yv8z9FmtRpn7v66f/gTqI8vS7PxlUCOfph34ypED99IsRBepn/xlUovZ7HzIkWffdL0clarf3wYgCtdv7wYgSddf9KFC6vR+MKFF33b9XpXR7H0SButt7V6Duun+PAtV2XwWo7b4KUNt9FaC2+ypAvbYbyv6wG8r+sBvK/rAbSkXdb7FKVdT9FqtSRd1vsSpV1P0Wq0JF3W+xEipD3W+xSikNdb/FSqgcKurdK9ZbyRzqoGLuXrEeymXm7hXrrWQG1Zf7w76N6h/fRtWXmbuvWJeSGVVfau6+YF1KZpTeH0bVpWReub+MKiXzyv1pVKXk6f4wqlLy9FsvRipRv/X6IFC6vR+N1b8I1G6vjALVdl8FqO2+ClDbfRWgtvsqQL22G8p++Ww3FHe/wYpUVPca7ENFda/BPlRUtxpMQUV1p8EUVFT3GkxBRd0bYHIq6t4Ak1JRf2D6Z0b9gelXRP39M2b6758x0/+PWev/M2v9Y9Y666S1zjpprbNWeuu01VvrrNVWb62zVlu9tdba6KyVxlopjbXSWvcf3Zp2vA3fCfkAAAAASUVORK5CYII=" alt="大學眼鏡">
+</div>
 
 <div class="container">
     <h2>智慧眼鏡驗配調查</h2>
@@ -273,7 +222,6 @@
 
     form.addEventListener('submit', function(e) {
         e.preventDefault();
-        
         submitBtn.disabled = true;
         submitBtn.innerText = '處理中...';
 
@@ -343,7 +291,7 @@
             if(radio) radio.checked = true;
             
             window.scrollTo({ top: 0, behavior: 'smooth' });
-            alert('已將單號 ' + invoiceNo + ' 的數據抽回上方表單，請修正後重新點擊「提交紀錄」即可。');
+            alert('已將單號 ' + invoiceNo + ' 的數據抽回上方表單，修正後重新提交即可。');
         }
     }
 </script>
