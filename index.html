@@ -6,9 +6,9 @@
     
     <title>大學眼鏡 | 智慧眼鏡驗配調查</title>
     <meta property="og:title" content="智慧眼鏡驗配調查">
-    <meta property="og:description" content="2026上半年記錄 - 歷史成交記錄盤點">
+    <meta property="og:description" content="2026上半年記錄 - 年度歷史成交數據盤點端">
     <meta property="og:type" content="website">
-    <meta property="og:site_name" content="大學眼鏡AI智慧眼鏡">
+    <meta property="og:site_name" content="大學眼鏡大數據系統">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,7 +16,6 @@
     
     <style>
         :root {
-            /* 品牌與功能色彩系統 */
             --primary-color: #2563eb;
             --btn-gradient: linear-gradient(135deg, #1d4ed8 0%, #0f172a 100%);
             --btn-hover-gradient: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
@@ -24,7 +23,6 @@
             --text-main: #0f172a;
             --text-muted: #475569;
             
-            /* Apple 經典選取確認色（數位藍與立體光暈） */
             --apple-selected-border: #0066cc;
             --apple-selected-glow: rgba(0, 102, 204, 0.15);
             
@@ -65,7 +63,7 @@
             box-sizing: border-box;
         }
 
-        /* 大學眼鏡 Logo 容器 (無灰色底色) */
+        /* 大學眼鏡 Logo 容器 */
         .card-logo-box {
             text-align: center;
             margin-bottom: 25px;
@@ -75,7 +73,6 @@
             box-shadow: none;
         }
 
-        /* Logo 尺寸放大為 220% */
         .card-logo-box img {
             max-width: 132px;
             height: auto;
@@ -89,6 +86,22 @@
         label { display: block; font-weight: 700; margin-bottom: 12px; font-size: 15px; color: #000; }
         .required::after { content: " *"; color: #df1c1c; }
         
+        /* 💡 關閉表單專用：截止公告區塊樣式 */
+        .close-alert {
+            display: none;
+            background: #fef2f2;
+            border: 1.5px solid #fca5a5;
+            color: #991b1b;
+            padding: 16px;
+            border-radius: 16px;
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            text-align: center;
+            line-height: 1.5;
+            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.05);
+        }
+
         /* 基礎表單輸入框樣式 */
         select, input[type="tel"], textarea { 
             width: 100%; padding: 16px; border: 1.5px solid #cbd5e1; border-radius: 16px; font-size: 16px; 
@@ -176,6 +189,10 @@
     <h2>智慧眼鏡驗配調查</h2>
     <div class="subtitle">2026上半年記錄</div>
     
+    <div class="close-alert" id="closeAlert">
+        ⚠️ 本階段智慧眼鏡驗配回溯調查已於截止時間關閉。<br>若有漏報數據，請直接聯繫光學事業處專案負責人。
+    </div>
+
     <form id="surveyForm">
         <div class="form-group">
             <label class="required">填表門市</label>
@@ -279,22 +296,59 @@
     const form = document.getElementById('surveyForm');
     const submitBtn = document.getElementById('submitBtn');
     const historyList = document.getElementById('historyList');
+    const closeAlert = document.getElementById('closeAlert');
     
     const storeSelect = document.getElementById('storeSelect');
     const invoiceInput = document.getElementById('invoiceInput');
     const deviceSelect = document.getElementById('deviceSelect');
     const charCount = document.getElementById('charCount');
 
-    // ⚠️ 請在此處填入您的 Google Apps Script 實體部署網址
+    // ⚠️ 填入您的 Google Apps Script 實體部署網址
     const scriptUrl = 'https://script.google.com/macros/s/AKfycbzmKUvcAfvesNHHthe8iiw-Co28v43ufyafDEo_1JR04I6-VcZaIUyJ0EKxfdYGkhbo1A/exec'; 
 
+    // ==========================================
+    // 💡 決策控制項：在此設定表單的自動關閉時間
+    // 格式請嚴格遵循：'YYYY-MM-DDTHH:MM:SS' (24小時制)
+    // ==========================================
+    const closeDeadline = '2026-06-30T23:59:59'; 
+
     document.addEventListener('DOMContentLoaded', () => {
+        checkSystemExpiry(); // 優先檢查表單是否過期
         renderHistory();
         checkFieldsStatus(); 
     });
 
+    // 💡 核心關閉檢查邏輯
+    function checkSystemExpiry() {
+        const now = new Date();
+        const deadline = new Date(closeDeadline);
+
+        if (now >= deadline) {
+            // 1. 顯示截止公告
+            closeAlert.style.display = 'block';
+            
+            // 2. 禁用按鈕並更改文字
+            submitBtn.disabled = true;
+            submitBtn.innerText = '本網頁調查已截止收單';
+            submitBtn.style.background = '#94a3b8';
+            submitBtn.style.cursor = 'not-allowed';
+
+            // 3. 凍結所有輸入欄位，防止同仁繞過機制
+            const allInputs = form.querySelectorAll('input, select, textarea');
+            allInputs.forEach(input => {
+                input.disabled = true;
+                input.style.backgroundColor = '#f1f5f9';
+                input.style.cursor = 'not-allowed';
+            });
+            return true;
+        }
+        return false;
+    }
+
     // 動態偵測加入 Apple 經典亮色自訂外框
     function checkFieldsStatus() {
+        if (storeSelect.disabled) return; // 若表單已關閉則不執行
+
         if (storeSelect.value !== "") storeSelect.classList.add('filled');
         else storeSelect.classList.remove('filled');
 
@@ -314,6 +368,10 @@
 
     form.addEventListener('submit', function(e) {
         e.preventDefault();
+        
+        // 送出前做最後的防線檢查
+        if (checkSystemExpiry()) return;
+
         submitBtn.disabled = true;
         submitBtn.innerText = '處理中...';
 
@@ -343,8 +401,10 @@
             console.error('Error:', error);
         })
         .finally(() => {
-            submitBtn.disabled = false;
-            submitBtn.innerText = '提交紀錄';
+            if (!checkSystemExpiry()) {
+                submitBtn.disabled = false;
+                submitBtn.innerText = '提交紀錄';
+            }
         });
     });
 
@@ -372,12 +432,20 @@
                     <div style="font-weight:600; margin-top:2px; color:#1e293b;">${item.store} | ${item.displayDevice || item.device_type}</div>
                     <div class="meta">處方：<span style="font-weight:700;">${item.rx_type}</span> | 轉配：<span style="font-weight:700; color:${item.is_converted === '是' ? '#16a34a' : '#dc2626'};">${item.is_converted}</span></div>
                 </div>
-                <button type="button" class="btn-edit" onclick="editRecord('${item.invoice_no || item.displayInvoice}')">✏️ 修改</button>
+                <button type="button" class="btn-edit" id="editBtn_${item.invoice_no || item.displayInvoice}" onclick="editRecord('${item.invoice_no || item.displayInvoice}')">✏️ 修改</button>
             </div>
         `).join('');
+        
+        // 若過期，禁用歷史紀錄的修改按鈕
+        if (new Date() >= new Date(closeDeadline)) {
+            const editButtons = historyList.querySelectorAll('.btn-edit');
+            editButtons.forEach(btn => btn.disabled = true);
+        }
     }
 
     window.editRecord = function(identifier) {
+        if (checkSystemExpiry()) return; // 過期則鎖死修改功能
+
         const history = JSON.parse(localStorage.getItem('survey_history')) || [];
         const record = history.find(h => h.invoice_no === identifier || h.displayInvoice === identifier);
         
